@@ -1,110 +1,231 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Bestfriend Is A Ghost</title>
-<style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bestfriend Is A Ghost</title>
+    <style>
+        
+        :root {
+            --rich-dark: #141b23;       
+            --light-cream: #f5f5f5;     
+            --jewel-accent: #20b2aa;    
+            --jewel-shadow: rgba(32, 178, 170, 0.5);
+            --gold-subtle: #b8860b;     
+        }
 
-html, body {
-  scroll-behavior: smooth;
-}
+        html, body {
+            height: 100%;
+            scroll-behavior: smooth;
+            background: var(--rich-dark);
+        }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: "Georgia", serif;
-  background: #f2e6d8;
-  color: #3b2f2f;
-  line-height: 1.8;
-}
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Playfair Display', Georgia, serif; /
+            color: var(--light-cream);
+            line-height: 1.8;
+            overflow-x: hidden;
+           
+            filter: contrast(1.1) brightness(1.05) hue-rotate(-5deg); 
+        }
+        
+       
+        @keyframes cameraPan {
+            0% { transform: scale(1.005) translate(0.1%, 0.1%); }
+            100% { transform: scale(1) translate(-0.1%, -0.1%); }
+        }
 
+        .cinematic-container {
+            width: 100%;
+            height: 100%;
+            animation: cameraPan 70s ease-in-out infinite alternate;
+            position: relative;
+            z-index: 1;
+        }
 
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8);
+            pointer-events: none;
+            z-index: -1;
+        }
 
-/* Page styling */
-.page {
-width: 85%;
-max-width: 750px;
-margin: 60px auto;
-padding: 40px;
-background: #fbf5ea;
-border: 1px solid #d6c7b4;
-box-shadow: 0 0 20px rgba(0,0,0,0.1);
-border-radius: 12px;
-}
+        
+        .page {
+            width: 85%;
+            max-width: 750px;
+            margin: 80px auto;
+            padding: 40px;
+            background: rgba(20, 27, 35, 0.95); 
+            border: 1px solid var(--jewel-accent);
+            box-shadow: 0 0 15px var(--jewel-shadow); 
+            border-radius: 10px;
+            backdrop-filter: blur(5px); 
+            position: relative;
+            z-index: 5;
+            transition: box-shadow 0.4s ease;
+            
+            /* SCROLL-REVEAL INITIAL STATE */
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
 
-.page h2 {
-text-align: center;
-margin-top: 0;
-font-size: 2rem;
-margin-bottom: 20px;
-color: #3b2f2f;
-}
+        /* SCROLL-REVEAL TARGET STATE */
+        .page.scroll-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .page:hover {
+            box-shadow: 0 0 25px var(--jewel-shadow), 0 0 5px var(--gold-subtle);
+        }
 
-.page h3 {
-margin-bottom: 5px;
-color: #4b3b32;
-}
+        /* ------------------------------------- */
+        /* 4. TYPOGRAPHY (The Focus Light)       */
+        /* ------------------------------------- */
+        .page h2 {
+            text-align: center;
+            font-size: 2.8rem;
+            color: var(--jewel-accent);
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            text-shadow: 0 0 8px var(--jewel-shadow); 
+        }
 
-/* Buttons & links */
-.chapter-nav {
-text-align: center;
-margin-top: 30px;
-}
+        .page h3 {
+            color: var(--gold-subtle); /* Use secondary color for subheadings */
+            font-style: italic;
+            border-left: 5px solid var(--jewel-accent);
+            padding-left: 15px;
+            margin-top: 35px;
+        }
+        
+        .page p {
+            transition: color 0.3s ease;
+        }
 
-.chapter-nav a {
-display: inline-block;
-margin: 5px;
-padding: 12px 20px;
-background: #e7d9c4;
-color: #3b2f2f;
-text-decoration: none;
-border: 1px solid #c7b8a2;
-border-radius: 6px;
-font-weight: bold;
-transition: 0.3s;
-}
+        /* Continuous text shadow shimmer */
+        @keyframes textShine {
+            0% { text-shadow: 0 0 1px var(--light-cream); }
+            100% { text-shadow: 0 0 3px var(--light-cream); }
+        }
+        .page p:hover {
+            color: var(--jewel-accent);
+            animation: textShine 0.5s ease-in-out infinite alternate;
+        }
 
-.chapter-nav a:hover {
-background: #d6c7b4;
-}
+        /* ------------------------------------- */
+        /* 5. INTERACTIVE BUTTONS (Dramatic Shift) */
+        /* ------------------------------------- */
+        .chapter-nav a {
+            display: inline-block;
+            padding: 18px 35px;
+            background: var(--jewel-accent);
+            color: var(--rich-dark);
+            border: 2px solid var(--gold-subtle);
+            border-radius: 50px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
 
-.feedback {
-text-align: center;
-margin: 40px 0;
-}
+        .chapter-nav a:hover {
+            background: var(--rich-dark);
+            color: var(--jewel-accent);
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 5px 25px var(--jewel-shadow);
+        }
 
-.feedback a {
-font-size: 1.2rem;
-padding: 12px 20px;
-background: #d4c2aa;
-color: #3b2f2f;
-text-decoration: none;
-border: 1px solid #b8a58f;
-border-radius: 6px;
-}
+        /* ------------------------------------- */
+        /* 6. COVER TRANSITION (Film Wipe)       */
+        /* ------------------------------------- */
+        /* Simulates an iris or aperture opening */
+        @keyframes irisReveal {
+            0% { opacity: 0; clip-path: circle(0% at 50% 50%); }
+            100% { opacity: 1; clip-path: circle(100% at 50% 50%); }
+        }
 
-.feedback a:hover {
-background: #c7b8a2;
-} </style>
+        #starting-cover {
+            padding: 0;
+            opacity: 0;
+            animation: irisReveal 2s ease-in-out 0.5s forwards; 
+        }
 
+        /* ------------------------------------- */
+        /* 7. CONTENT FADE (JS Required)         */
+        /* ------------------------------------- */
+        .cover-content { /* Specific class for content *after* the cover */
+            opacity: 0; 
+            transition: opacity 1.5s ease 2s; 
+            transform: translateY(0); /* Override scroll-reveal initial transform */
+        }
+        .cover-content.visible { 
+            opacity: 1; 
+        }
+    </style>
 </head>
 <body>
 
+<div class="cinematic-container">
 
-<div id="starting-cover" class="page fade-in" style="padding:0; overflow:hidden;">
-    <img src="novelcoverpage.png"
-        alt="Cover Image"
-        style="
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            border-radius: 12px;
-        "
-    >
-</div>
+    <div id="starting-cover" class="page">
+        <img src="novelcoverpage.png"
+            alt="Cover Image"
+            style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 8px;"
+        >
+    </div>
+
+    
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cover = document.getElementById('starting-cover');
+        const mainContent = document.getElementById('main-content');
+        
+        // 1. Initial Cover Reveal Stagger
+        // Wait for the irisReveal animation to finish (2.5s)
+        setTimeout(() => {
+            mainContent.classList.add('visible');
+            
+            // Hide the cover once the content is visible
+            setTimeout(() => {
+                cover.style.display = 'none';
+            }, 1000); 
+            
+        }, 2500);
+
+        // 2. Observer for Scroll Reveal (Impressive Feature!)
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.2 // Trigger when 20% of the item is visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                // Ignore the main-content which uses a time-based reveal
+                if (entry.target === mainContent) return;
+
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('scroll-visible');
+                    // Stop observing once visible to save resources
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Apply observer to all subsequent page sections
+        document.querySelectorAll('.page:not(#starting-cover)').forEach(section => {
+            observer.observe(section);
+        });
+    });
+</script>
 
 
 
@@ -811,16 +932,18 @@ background: #c7b8a2;
 
 
 
-<div class="page fade-in" id="continue">
-  <h2 style="text-align:center; font-style: italic; color:#4b3b32;">
-    To Be Continued...
-  </h2>
-  <p style="text-align:center; color:#4b3b32;">
-    The mystery deepens.<br>
+<div id="to-be-continued-page" class="page to-be-continued scroll-visible">
+        <h2>TO BE CONTINUED</h2>
+        <div class="quote">
+            The mystery deepens.<br>
     The shadows stir.<br>
     And this is only the beginning.
-  </p>
-</div>
+        </div>
+        <p style="color: var(--jewel-accent); margin-top: 50px; font-weight: bold;">
+            — *End of Current Content.* New chapters are coming soon.
+        </p>
+            </div>
+
 
 
 
