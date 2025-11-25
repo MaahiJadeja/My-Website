@@ -9,11 +9,11 @@
         /* 1. CORE STYLES AND JEWEL-TONED PALETTE*/
         /* ------------------------------------- */
         :root {
-            --rich-dark: #141b23;      /* Deep Charcoal/Navy base */
-            --light-cream: #f5f5f5;    /* Softest white/cream text */
-            --jewel-accent: #20b2aa;   /* Light Sea Green/Teal accent */
+            --rich-dark: #141b23;       /* Deep Charcoal/Navy base */
+            --light-cream: #f5f5f5;     /* Softest white/cream text */
+            --jewel-accent: #20b2aa;    /* Light Sea Green/Teal accent (rich and evocative) */
             --jewel-shadow: rgba(32, 178, 170, 0.5);
-            --gold-subtle: #b8860b;    /* Dark Goldenrod for secondary detail */
+            --gold-subtle: #b8860b;     /* Dark Goldenrod for secondary detail */
         }
 
         html, body {
@@ -25,11 +25,11 @@
         body {
             margin: 0;
             padding: 0;
-            /* FIX: Removed stray slash or unclosed comment from font-family line */
-            font-family: 'Playfair Display', Georgia, serif;
-            color: var(--light-cream); /* This is now correctly applied */
+            font-family: 'Playfair Display', Georgia, serif; /* Elegant, cinematic font */
+            color: var(--light-cream);
             line-height: 1.8;
             overflow-x: hidden;
+            /* Enhanced Color Grading: Deeper saturation, slight blue tint for mood */
             filter: contrast(1.1) brightness(1.05) hue-rotate(-5deg); 
         }
         
@@ -66,14 +66,14 @@
             max-width: 750px;
             margin: 80px auto;
             padding: 40px;
-            background: rgba(20, 27, 35, 0.95); 
+            background: rgba(20, 27, 35, 0.95); /* Slightly transparent for depth */
             border: 1px solid var(--jewel-accent);
             box-shadow: 0 0 15px var(--jewel-shadow); 
             border-radius: 10px;
             backdrop-filter: blur(5px); 
             position: relative;
             z-index: 5;
-            transition: box-shadow 0.4s ease, transform 0.4s ease;
+            transition: box-shadow 0.4s ease;
             
             /* SCROLL-REVEAL INITIAL STATE */
             opacity: 0;
@@ -89,7 +89,6 @@
         
         .page:hover {
             box-shadow: 0 0 25px var(--jewel-shadow), 0 0 5px var(--gold-subtle);
-            transform: translateY(-2px); 
         }
 
         /* ------------------------------------- */
@@ -106,7 +105,7 @@
         }
 
         .page h3 {
-            color: var(--gold-subtle);
+            color: var(--gold-subtle); /* Use secondary color for subheadings */
             font-style: italic;
             border-left: 5px solid var(--jewel-accent);
             padding-left: 15px;
@@ -128,7 +127,7 @@
         }
 
         /* ------------------------------------- */
-        /* 5. INTERACTIVE BUTTONS                */
+        /* 5. INTERACTIVE BUTTONS (Dramatic Shift) */
         /* ------------------------------------- */
         .chapter-nav a {
             display: inline-block;
@@ -140,7 +139,6 @@
             font-weight: bold;
             letter-spacing: 1px;
             transition: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            text-decoration: none;
         }
 
         .chapter-nav a:hover {
@@ -151,8 +149,9 @@
         }
 
         /* ------------------------------------- */
-        /* 6. COVER TRANSITION & CONTENT FADE    */
+        /* 6. COVER TRANSITION (Film Wipe)       */
         /* ------------------------------------- */
+        /* Simulates an iris or aperture opening */
         @keyframes irisReveal {
             0% { opacity: 0; clip-path: circle(0% at 50% 50%); }
             100% { opacity: 1; clip-path: circle(100% at 50% 50%); }
@@ -164,45 +163,16 @@
             animation: irisReveal 2s ease-in-out 0.5s forwards; 
         }
 
-        .cover-content {
+        /* ------------------------------------- */
+        /* 7. CONTENT FADE (JS Required)         */
+        /* ------------------------------------- */
+        .cover-content { /* Specific class for content *after* the cover */
             opacity: 0; 
             transition: opacity 1.5s ease 2s; 
-            transform: translateY(0);
+            transform: translateY(0); /* Override scroll-reveal initial transform */
         }
         .cover-content.visible { 
             opacity: 1; 
-        }
-
-        /* ------------------------------------- */
-        /* 7. TO BE CONTINUED SCREEN             */
-        /* ------------------------------------- */
-        .to-be-continued {
-            text-align: center;
-            padding: 100px 40px;
-            background: var(--rich-dark);
-            border: none;
-            box-shadow: none;
-        }
-        
-        .to-be-continued h2 {
-            font-size: 4rem;
-            color: var(--gold-subtle);
-            text-shadow: 0 0 15px rgba(184, 134, 11, 0.7);
-            animation: textGlow 1.5s ease-in-out infinite alternate;
-        }
-
-        @keyframes textGlow {
-            0% { text-shadow: 0 0 10px var(--gold-subtle); }
-            100% { text-shadow: 0 0 20px var(--gold-subtle), 0 0 5px var(--jewel-accent); }
-        }
-
-        .quote {
-            font-size: 1.5rem;
-            font-style: italic;
-            color: var(--jewel-accent);
-            margin-top: 30px;
-            border-top: 1px dashed var(--jewel-accent);
-            padding-top: 20px;
         }
     </style>
 </head>
@@ -217,61 +187,48 @@
         >
     </div>
 
-   
+    
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const cover = document.getElementById('starting-cover');
         const mainContent = document.getElementById('main-content');
         
-        // 1. INITIAL COVER REVEAL STAGGER
+        // 1. Initial Cover Reveal Stagger
+        // Wait for the irisReveal animation to finish (2.5s)
         setTimeout(() => {
-            if (mainContent) {
-                mainContent.classList.add('visible');
-            }
-            if (cover) {
-                setTimeout(() => {
-                    cover.style.display = 'none';
-                    cover.style.padding = '40px'; // Reset padding after hiding image
-                }, 1000); 
-            }
+            mainContent.classList.add('visible');
+            
+            // Hide the cover once the content is visible
+            setTimeout(() => {
+                cover.style.display = 'none';
+            }, 1000); 
+            
         }, 2500);
 
-        // 2. OBSERVER FOR SCROLL REVEAL 
+        // 2. Observer for Scroll Reveal (Impressive Feature!)
         const observerOptions = {
             root: null,
             rootMargin: '0px',
-            threshold: 0.15 
+            threshold: 0.2 // Trigger when 20% of the item is visible
         };
 
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
-                if (entry.target.classList.contains('page') && entry.isIntersecting) {
+                // Ignore the main-content which uses a time-based reveal
+                if (entry.target === mainContent) return;
+
+                if (entry.isIntersecting) {
                     entry.target.classList.add('scroll-visible');
+                    // Stop observing once visible to save resources
                     observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
 
-        // Apply observer to all page sections
-        document.querySelectorAll('.page').forEach(section => {
-            // Exclude the starting cover and main content which use the timed reveal
-            if (section.id !== 'starting-cover' && section.id !== 'main-content') {
-                 observer.observe(section);
-            }
-        });
-
-        // 3. Smooth Scroll for all internal links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
-
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
+        // Apply observer to all subsequent page sections
+        document.querySelectorAll('.page:not(#starting-cover)').forEach(section => {
+            observer.observe(section);
         });
     });
 </script>
@@ -994,12 +951,10 @@
             </div>
 
 
-
-
 <div class="page fade-in">
   <h2 style="text-align:center; margin-top: 0;">Share Your Feedback</h2>
   <div style="text-align:center; margin-top:20px;">
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSf8mlMwnYcYs0uQWFAVM3O93gXyq2q4YeYQ7uAB1tLAIxg60w/viewform?usp=dialog"
+    <a href="https://github.com/MaahiJadeja/My-Website/blob/main/novelcoverpage.png"
        class="glow-btn"
        style="
          font-size: 1.2rem;
